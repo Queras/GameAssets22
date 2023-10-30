@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Smoothen's The Turn Rotation")]
 	[Range(0, 0.2f)]
-	public float turnSmoothTime = 0.2f;
+	public float turnSmoothTime = 0.01f;
 	float turnSmoothVelocity;
 
     [Header("Extra Control (Usually Fine at 0 Though)")]
@@ -33,11 +33,15 @@ public class PlayerController : MonoBehaviour
     [Header("Camera Setting")]
     public bool bUseCameraControlRotation; // makes it so the rotation of the capsule follows the camera, Turning it off will make it so you can rotate with your camera without your character turning too.
 
+    new public Rigidbody rigidbody;
+    private bool useGravity;
+
     void Start()
 	{
 		cameraT = Camera.main.transform; // Camera initial transform cache
 		controller = GetComponent<CharacterController>(); // Fetching the component at Start() to keep the variables private, less room for error.
-	}
+        rigidbody = GetComponent<Rigidbody>();
+    }
 
     void Update()
     {
@@ -54,6 +58,7 @@ public class PlayerController : MonoBehaviour
         {
 	        Jump();
         }
+		DoRay();
     }
 
 	void Move(Vector2 inputDir, bool running)
@@ -101,11 +106,16 @@ public class PlayerController : MonoBehaviour
 	{
 		if (controller.isGrounded)
 		{
-			float jumpVelocity = Mathf.Sqrt(-2 * gravity * jumpHeight);
+			float jumpVelocity = Mathf.Sqrt(-3 * gravity * jumpHeight);
 			velocityY = jumpVelocity;
+			
+			rigidbody.useGravity = false;
+        if (useGravity) rigidbody.AddForce(Physics.gravity * (rigidbody.mass * rigidbody.mass));
 
 		}
-	}
+
+        
+    }
 
 	float GetModifiedSmoothTime(float smoothTime)
 	{
@@ -119,5 +129,30 @@ public class PlayerController : MonoBehaviour
 			return float.MaxValue;
 		}
 		return smoothTime / airControlPercent;
-	}
+    }
+	[Range(0,10f)] public float drawerinteractdistance = 0.5f;
+	private void DoRay()
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (!Physics.Raycast(ray, out var hit, 1000)) return;
+        var hitPoint = hit.point;
+        var objectHit = hit.transform;
+		var _distance = Vector3.Distance(hitPoint, transform.position);
+		if  ( _distance > drawerinteractdistance)
+			return;
+
+        
+        var isDrawerController = objectHit.gameObject.TryGetComponent(out Drawer dc);
+		if (!isDrawerController)
+			return;
+         var drawer = dc.GetController();
+
+        if (Input.GetMouseButtonDown(0))
+		{
+			drawer.Interact();
+			Debug.Log("Click");
+		}
+           
+    }
+
 }
