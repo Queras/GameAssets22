@@ -123,6 +123,7 @@ MonoBehaviour:
     hasGreenKey: 1
     hasBlueKey: 1
     hasPinkKey: 1
+  mCollider: {fileID: 537971641541839483}
 --- !u!65 &6904958730720019479
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -145,7 +146,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1707172918, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1209850873615150028, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
       propertyPath: m_Layer
@@ -221,7 +222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8884570399796844769, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8884570399900592939, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
       propertyPath: m_Layer
@@ -247,9 +248,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1707172918, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+--- !u!65 &537971641541839483 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 1707172918, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+  m_PrefabInstance: {fileID: 537971643206905421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8606597981366627350 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8072567196811199067, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -34,7 +36,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody m_rigidbody;
     private bool useGravity;
 
-    public bool viewMaster = false;
+    [HideInInspector] public bool viewMaster = false;
 
     Camera mainCamera;
 
@@ -44,12 +46,12 @@ public class PlayerController : MonoBehaviour
         cameraT = mainCamera.transform;
         controller = GetComponent<CharacterController>(); // Fetching the component at Start() to keep the variables private, less room for error.
         m_rigidbody = GetComponent<Rigidbody>();
-        viewMaster = GetComponent<ViewMaster>();
     }
 
     void Update()
     {
-        // input detection
+        HasVM();
+
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Vector2 inputDir = input.normalized;
         bool running = Input.GetKey(KeyCode.LeftShift);
@@ -63,9 +65,9 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
         DoRay();
-    }
 
-    void Move(Vector2 inputDir, bool running)
+    }
+    void CameraMovement(Vector2 inputDir)
     {
         if (inputDir != Vector2.zero && !bUseCameraControlRotation)
         {
@@ -77,18 +79,28 @@ public class PlayerController : MonoBehaviour
         {
             float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(turnSmoothTime));
+
         }
 
+    }
+    void Move(Vector2 inputDir, bool running)
+    {
+        CameraMovement(inputDir);
         float targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;
 
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));
 
         if (velocityY > -5) { velocityY += Time.deltaTime * gravity; }
         Vector3 velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
+        if (isUsingVm)
+        {
+            velocity = Vector3.up * velocityY;
 
+        }
         controller.Move(velocity * Time.deltaTime);
         currentSpeed = new Vector2(controller.velocity.x, controller.velocity.z).magnitude;
-
+        isMoving = currentSpeed != 0 ? true : false;
+        /*
         switch (currentSpeed != 0)
         {
             case true:
@@ -103,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
                 break;
         }
-
+        */ //John legacy
     }
 
     public void Jump()
@@ -134,7 +146,7 @@ public class PlayerController : MonoBehaviour
         }
         return smoothTime / airControlPercent;
     }
-    [Range(0, 10f)] public float drawerinteractdistance = 0.5f; //Edit Change to defaultinteractdistance if global.
+    [Range(0, 10f)] public float interactDistance = 0.5f; //Edit Change to defaultinteractdistance if global.
     public LayerMask interactableLayerMask;
     private void DoRay()
     {
@@ -142,30 +154,78 @@ public class PlayerController : MonoBehaviour
         var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (!Physics.Raycast(ray, out var hit)) return; //does this refer to layer in inspector? and in what context does it ned to be in?
-        var abc = hit.transform.gameObject.GetComponent<IInteractable>();
-        Debug.Log("MouseRay" + hit.transform.gameObject.name);
-        if (abc != null) { abc.Interact(this); }
-        if (hit.transform.gameObject.TryGetComponent(out IInteractable interactableObject)) //changed IInteractable to I_Interactable due to naming convention
-        {
-            interactableObject.Interact(this);
+        if (Vector3.Distance(hit.point, transform.position) > interactDistance) return;
+        var interactable = hit.transform.gameObject.GetComponent<IInteractable>();
+        if (interactable != null) { interactable.Interact(this); }
 
-        }
     }
+    public Image vignet;
+    private bool isUsingVm;
+    [SerializeField] private List<LensColor> lenseInvetory;
+    public void AddToLenseInventory(LensColor color)
+    {
+        lenseInvetory.Add(color);
+
+    }
+    private LensColor lastUsedLense;
+    private int lastUsedIndex;
+    public GameObject redLense, greenLense, blueLense;
     public void HasVM()
     {
+        if (!viewMaster || vignet == null) return;
+        if (Input.GetKey(KeyCode.E))
 
-        if (!Input.GetKeyDown(KeyCode.E) || !viewMaster) return;
-        // if (viewMaster == true)(GetComponent<Canvas>); 
+        {
+            vignet.enabled = true;
+            isUsingVm = true;
+            if (lenseInvetory.Count > 0)
+            {
+                if (Input.mouseScrollDelta.y > 0)
+                {
+                    lastUsedIndex++; //is scrolling up
+                }
+                else
+                    if (Input.mouseScrollDelta.y < 0 && lastUsedIndex > 0)
+                {
+                    lastUsedIndex--;
+                }
+                if (lastUsedIndex == lenseInvetory.Count) lastUsedIndex = 0;
+                abc();
+                switch (lenseInvetory[lastUsedIndex])
+                {
+                    case LensColor.Red:
+                        redLense.SetActive(true);
+                        break;
+                    case LensColor.Green:
+                        greenLense.SetActive(true);
+                        break;
+                    case LensColor.Blue:
+                        blueLense.SetActive(true);
+                        break;
+                    default: break;
+                }
+            }
+
+        }
+        else
+        {
+            abc();
+            vignet.enabled = false;
+            isUsingVm = false;
+        }
+        if (vignet.enabled != true) return;
 
 
+        // when using VM with no lense BW is default,
+        // when first lense is in inventory is new default.
+        // when two or more lenses is in inventory remember last lense used as default.
 
-
-
-
-
-
-
-
+    }
+    private void abc()
+    {
+        blueLense.SetActive(false);
+        greenLense.SetActive(false);
+        redLense.SetActive(false);
     }
 }
 

@@ -14,10 +14,11 @@ public class DrawerController : Interactable
     [SerializeField] private GameObject drawer, redKey, greenKey, blueKey, pinkKey;
     [SerializeField] private Transform startPos, stopPos;
     [SerializeField] private KeyManager keyManager = new KeyManager();
+    [SerializeField] private BoxCollider mCollider;
     // Start is called before the first frame update
     void Start()
     {
-
+        mCollider.enabled = false;
 
     }
     private void OnValidate()
@@ -41,6 +42,7 @@ public class DrawerController : Interactable
         if (lerpAlpha < 1) lerpAlpha += Time.deltaTime * lerpSpeed;
         if (lerpAlpha >= 1)
         {
+            mCollider.enabled = !mCollider.enabled;
             drawertrigger = false;
             lerpAlpha = 0;
             var temppos = stopPos;
