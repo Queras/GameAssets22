@@ -228,7 +228,3 @@ public class PlayerController : MonoBehaviour
         redLense.SetActive(false);
     }
 }
-
-
-
-
