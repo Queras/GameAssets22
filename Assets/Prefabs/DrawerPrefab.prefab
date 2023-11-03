@@ -72,6 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4393671325107734562}
   - component: {fileID: 1965217839533214491}
+  - component: {fileID: 6904958730720019479}
   m_Layer: 0
   m_Name: DrawerPrefab
   m_TagString: Untagged
@@ -122,6 +123,19 @@ MonoBehaviour:
     hasGreenKey: 1
     hasBlueKey: 1
     hasPinkKey: 1
+--- !u!65 &6904958730720019479
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8599056649075812321}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2366772, y: 0.58333, z: 1.5238143}
+  m_Center: {x: -0.531, y: -0.282, z: 0.767}
 --- !u!1001 &537971643206905421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -129,6 +143,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4393671325107734562}
     m_Modifications:
+    - target: {fileID: 1707172918, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1209850873615150028, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1209850874101543456, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1209850874120794905, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1209850874872583345, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8072567196811199067, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -174,6 +208,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8884570398742107222, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884570398742107222, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -181,19 +219,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drawer Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8884570399796844769, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884570399900592939, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8884570399900592939, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884570400003650558, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8884570400003650558, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8884570400017887943, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884570400017887943, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1707172918, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 156a7ef892815484394e8e90c1ee50e8, type: 3}
 --- !u!4 &8606597981366627350 stripped
 Transform:
