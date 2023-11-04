@@ -4011,6 +4011,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5454299301567365614, guid: 13063d5b670c8ef43accb6073039b2e6, type: 3}
+      propertyPath: hasVm
+      value: 
+      objectReference: {fileID: 830274021}
+    - target: {fileID: 5454299301567365614, guid: 13063d5b670c8ef43accb6073039b2e6, type: 3}
+      propertyPath: hasRed
+      value: 
+      objectReference: {fileID: 709782589}
+    - target: {fileID: 5454299301567365614, guid: 13063d5b670c8ef43accb6073039b2e6, type: 3}
       propertyPath: vignet
       value: 
       objectReference: {fileID: 1001715087}
@@ -4018,6 +4026,14 @@ PrefabInstance:
       propertyPath: gravity
       value: -15
       objectReference: {fileID: 0}
+    - target: {fileID: 5454299301567365614, guid: 13063d5b670c8ef43accb6073039b2e6, type: 3}
+      propertyPath: hasBlue
+      value: 
+      objectReference: {fileID: 1439821160}
+    - target: {fileID: 5454299301567365614, guid: 13063d5b670c8ef43accb6073039b2e6, type: 3}
+      propertyPath: hasGreen
+      value: 
+      objectReference: {fileID: 604597358}
     - target: {fileID: 5454299301567365614, guid: 13063d5b670c8ef43accb6073039b2e6, type: 3}
       propertyPath: redLense
       value: 

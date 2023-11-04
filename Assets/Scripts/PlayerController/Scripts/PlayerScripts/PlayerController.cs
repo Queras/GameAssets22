@@ -160,6 +160,10 @@ public class PlayerController : MonoBehaviour
 
     }
     public Image vignet;
+    public Image hasVm;
+    public Image hasRed;
+    public Image hasGreen;
+    public Image hasBlue;
     private bool isUsingVm;
     [SerializeField] private List<LensColor> lenseInvetory;
     public void AddToLenseInventory(LensColor color)
@@ -172,6 +176,18 @@ public class PlayerController : MonoBehaviour
     public GameObject redLense, greenLense, blueLense;
     public void HasVM()
     {
+
+        if (!viewMaster) hasVm.enabled = false;
+
+        else
+            if (viewMaster) hasVm.enabled = true;
+
+        /* if (!Red) hasRed.enabled = false;
+
+         else
+             if (redLense) hasRed.enabled = true;
+        */ //enable lense in UI when pick up
+
         if (!viewMaster || vignet == null) return;
         if (Input.GetKey(KeyCode.E))
 
@@ -214,6 +230,7 @@ public class PlayerController : MonoBehaviour
             isUsingVm = false;
         }
         if (vignet.enabled != true) return;
+
 
 
         // when using VM with no lense BW is default,
