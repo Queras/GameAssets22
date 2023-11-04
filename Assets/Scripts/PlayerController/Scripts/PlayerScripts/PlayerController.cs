@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,8 +41,10 @@ public class PlayerController : MonoBehaviour
 
     Camera mainCamera;
 
+    public TMP_Text crosshair;
     void Start()
     {
+        SetCrosshair(Color.black, Color.white, .4f);
         mainCamera = Camera.main;
         cameraT = mainCamera.transform;
         controller = GetComponent<CharacterController>(); // Fetching the component at Start() to keep the variables private, less room for error.
@@ -148,15 +151,29 @@ public class PlayerController : MonoBehaviour
     }
     [Range(0, 10f)] public float interactDistance = 0.5f; //Edit Change to defaultinteractdistance if global.
     public LayerMask interactableLayerMask;
+    private void SetCrosshair(Color color, Color outline, float with)
+    {
+        crosshair.faceColor = color;
+        crosshair.outlineColor = outline;
+        crosshair.outlineWidth = with;
+    }
     private void DoRay()
     {
-        if (!Input.GetMouseButtonDown(1)) return;  //is playerHasControl a new bool, floot or what? (edit;same as controller?)
+        //is playerHasControl a new bool, floot or what? (edit;same as controller?)
         var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (!Physics.Raycast(ray, out var hit)) return; //does this refer to layer in inspector? and in what context does it ned to be in?
-        if (Vector3.Distance(hit.point, transform.position) > interactDistance) return;
         var interactable = hit.transform.gameObject.GetComponent<IInteractable>();
-        if (interactable != null) { interactable.Interact(this); }
+        if (interactable == null)
+            SetCrosshair(Color.white, Color.black, .4f);
+        else SetCrosshair(Color.black, Color.white, .4f);
+        if (Vector3.Distance(hit.point, transform.position) > interactDistance) return;
+        if (!Input.GetMouseButtonDown(1)) return;
+        if (interactable != null)
+        {
+            interactable.Interact(this);
+        }
+
 
     }
     public Image vignet;
@@ -169,7 +186,19 @@ public class PlayerController : MonoBehaviour
     public void AddToLenseInventory(LensColor color)
     {
         lenseInvetory.Add(color);
-
+        switch (color)
+        {
+            case LensColor.Red:
+                hasRed.enabled = true;
+                break;
+            case LensColor.Green:
+                hasGreen.enabled = true;
+                break;
+            case LensColor.Blue:
+                hasBlue.enabled = true;
+                break;
+            default: break;
+        }
     }
     private LensColor lastUsedLense;
     private int lastUsedIndex;
@@ -177,16 +206,14 @@ public class PlayerController : MonoBehaviour
     public void HasVM()
     {
 
+
         if (!viewMaster) hasVm.enabled = false;
 
         else
             if (viewMaster) hasVm.enabled = true;
 
-        /* if (!Red) hasRed.enabled = false;
 
-         else
-             if (redLense) hasRed.enabled = true;
-        */ //enable lense in UI when pick up
+        //enable lense in UI when pick up
 
         if (!viewMaster || vignet == null) return;
         if (Input.GetKey(KeyCode.E))
@@ -201,9 +228,10 @@ public class PlayerController : MonoBehaviour
                     lastUsedIndex++; //is scrolling up
                 }
                 else
-                    if (Input.mouseScrollDelta.y < 0 && lastUsedIndex > 0)
+                    if (Input.mouseScrollDelta.y < 0)
                 {
                     lastUsedIndex--;
+                    if (lastUsedIndex < 0) lastUsedIndex = lenseInvetory.Count - 1;
                 }
                 if (lastUsedIndex == lenseInvetory.Count) lastUsedIndex = 0;
                 abc();
