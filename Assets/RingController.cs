@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class RingController : Interactable
 {
+
     private bool ringTrigger;
-    private GameObject ring1, ring2, ring3;
-    public float xAngle, yAngle, zAngle;
+    [SerializeField] private GameObject ring;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,14 +15,17 @@ public class RingController : Interactable
     void Update()
     {
         if (!ringTrigger) return;
-        if (ring1 != null)
-        {
-            ringTrigger = false;
-            // else Rotate(xAngle 60.0f);
-        }
+
     }
     public override void Interact(PlayerController caller)
     {
         ringTrigger = true;
+        if (ringTrigger == true)
+        {
+
+            ring.transform.Rotate(60.0f, 0.0f, 0.0f, Space.Self);
+
+        }
+
     }
 }
