@@ -4,28 +4,33 @@ public class RingController : Interactable
 {
 
     private bool ringTrigger;
-    [SerializeField] private GameObject ring;
+    [SerializeField] private int lerpSpeed;
+    private float lerpAlpha;
+
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<BoxCollider>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!ringTrigger) return;
+        lerpAlpha += lerpSpeed;
+        transform.Rotate(lerpSpeed, 0, 0, Space.Self);
 
+        if (lerpAlpha == 60)
+        {
+            ringTrigger = false;
+            lerpAlpha = 0;
+        }
     }
     public override void Interact(PlayerController caller)
     {
+        if (ringTrigger) return;
         ringTrigger = true;
-        if (ringTrigger == true)
-        {
 
-            ring.transform.Rotate(60.0f, 0.0f, 0.0f, Space.Self);
-
-        }
 
     }
 }

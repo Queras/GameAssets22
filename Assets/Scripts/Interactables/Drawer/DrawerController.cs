@@ -21,15 +21,20 @@ public class DrawerController : Interactable
         mCollider.enabled = false;
 
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(startPos.position, 0.5f);
+        Gizmos.DrawWireSphere(stopPos.position, 0.5f);
+    }
     private void OnValidate()
     {
-        redKey.SetActive(keyManager.hasRedKey);
+        if (redKey) redKey.SetActive(keyManager.hasRedKey);
 
-        greenKey.SetActive(keyManager.hasGreenKey);
+        if (greenKey) greenKey.SetActive(keyManager.hasGreenKey);
 
-        blueKey.SetActive(keyManager.hasBlueKey);
+        if (blueKey) blueKey.SetActive(keyManager.hasBlueKey);
 
-        pinkKey.SetActive(keyManager.hasPinkKey);
+        if (pinkKey) pinkKey.SetActive(keyManager.hasPinkKey);
 
     }
     // Update is called once per frame
