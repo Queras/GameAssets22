@@ -26,17 +26,18 @@ public class SlideDoorController : Interactable
     {
         if (!slideDoor) { return; }
         lerpAlpha += Time.deltaTime * lerpSpeed;
+        transform.position = Vector3.Lerp(startPos, stopPos, lerpAlpha);
         if (lerpAlpha >= 1)
         {
             mCollider.enabled = !mCollider.enabled;
             slideDoor = false;
             lerpAlpha = 0;
-            var temppos = stopPos;
-            stopPos = startPos;
-            startPos = temppos;
+            var temppos = startPos;
+            startPos = stopPos;
+            stopPos = temppos;
         }
 
-        if (lerpAlpha >= 1) { slideDoor = false; }
+
 
 
     }

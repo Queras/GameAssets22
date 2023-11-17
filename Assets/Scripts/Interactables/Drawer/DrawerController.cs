@@ -46,6 +46,7 @@ public class DrawerController : Interactable
         if (!drawertrigger)
             return;
         if (lerpAlpha < 1) lerpAlpha += Time.deltaTime * lerpSpeed;
+        drawer.transform.position = Vector3.Lerp(startPos.position, stopPos.position, lerpAlpha);
         if (lerpAlpha >= 1)
         {
             mCollider.enabled = !mCollider.enabled;
@@ -55,7 +56,7 @@ public class DrawerController : Interactable
             stopPos = startPos;
             startPos = temppos;
         }
-        drawer.transform.position = Vector3.Lerp(startPos.position, stopPos.position, lerpAlpha);
+
 
     }
     public override void Interact(PlayerController caller)
