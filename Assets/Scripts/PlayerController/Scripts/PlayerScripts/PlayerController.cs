@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -162,7 +163,7 @@ public class PlayerController : MonoBehaviour
         //is playerHasControl a new bool, floot or what? (edit;same as controller?)
         var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (!Physics.Raycast(ray, out var hit)) return; //does this refer to layer in inspector? and in what context does it ned to be in?
+        if (!Physics.Raycast(ray, out hit)) return; //does this refer to layer in inspector? and in what context does it ned to be in?
         var interactable = hit.transform.gameObject.GetComponent<IInteractable>();
         if (interactable == null)
             SetCrosshair(Color.white, Color.black, .4f);
@@ -203,6 +204,8 @@ public class PlayerController : MonoBehaviour
     private LensColor lastUsedLense;
     private int lastUsedIndex;
     public GameObject redLense, greenLense, blueLense;
+    [DoNotSerialize] public RaycastHit hit;
+
     public void HasVM()
     {
 

@@ -15,6 +15,7 @@ public class DrawerController : Interactable
     [SerializeField] private Transform startPos, stopPos;
     [SerializeField] private KeyManager keyManager = new KeyManager();
     [SerializeField] private BoxCollider mCollider;
+    [SerializeField] private AudioClip mClip;
     // Start is called before the first frame update
     void Start()
     {

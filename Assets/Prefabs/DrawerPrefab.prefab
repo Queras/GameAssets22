@@ -354,6 +354,7 @@ MonoBehaviour:
     hasBlueKey: 1
     hasPinkKey: 1
   mCollider: {fileID: 7821085460640936941}
+  mClip: {fileID: 0}
 --- !u!65 &6904958730720019479
 BoxCollider:
   m_ObjectHideFlags: 0
