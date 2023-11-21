@@ -2,38 +2,20 @@ using UnityEngine;
 
 public class ViewMaster : Interactable
 {
-
+    public GameObject vmMesh, dialougePrefab, dialogueText, getGlases;
 
 
     public override void Interact(PlayerController caller)
     {
+        if (getGlases.activeSelf) return;
         caller.viewMaster = true;
-        gameObject.SetActive(false);
+        vmMesh.SetActive(false);
+        dialougePrefab.SetActive(true);
+        dialogueText.SetActive(true);
     }
 
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-}
-public abstract class Interactable : MonoBehaviour, IInteractable
-{
-    public abstract void Interact(PlayerController caller);
-}
-
-public interface IInteractable
-
-{
-    void Interact(PlayerController caller);
-
 
 }
+
