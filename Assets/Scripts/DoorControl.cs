@@ -1,13 +1,8 @@
-
-
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class DoorControl : Interactable
 {
-   
+
     public Animator door = null;
     public bool haskey = false;
     public bool isDoorOpen = false;
@@ -18,32 +13,38 @@ public class DoorControl : Interactable
     public float rotationSpeed = 1;
     public BoxCollider boxCollider;
     public Vector3 startAngle;
+    public bool isOneShoot, hasShoot;
     public override void Interact(PlayerController caller)
     {
-        if (doLerp)return; //If we are animating ignore input
+        if (doLerp) return; //If we are animating ignore input
         Debug.Log("Clicked on door");
-        
-            if (haskey)
-            {
+        if (isOneShoot && hasShoot) return;
+        if (haskey)
+        {
 
-                Debug.Log("Door Open");
-                if (door) door.SetTrigger("openDoor");
-                if (useCodeAnimation) doLerp = true;
-                
-                
-            }
-            else if (door == null)
+            Debug.Log("Door Open");
+            if (door)
             {
-                Debug.Log("No door");
+                door.SetTrigger("openDoor");
+                if (isOneShoot is true) hasShoot = true;
             }
+            if (useCodeAnimation) doLerp = true;
 
-        
+
+        }
+        else if (door == null)
+        {
+            Debug.Log("No door");
+        }
+
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
         door = GetComponent<Animator>();
+        if (door == null) { useCodeAnimation = true; }
         boxCollider = GetComponent<BoxCollider>();
         boxCollider.isTrigger = true;
         rotationAlpha = startAngle.y;
@@ -54,7 +55,7 @@ public class DoorControl : Interactable
     {
         if (!useCodeAnimation) return; // do nothing if we have animator
         if (!doLerp) return; // if we havent interacted with object, do nothing
-        transform.localRotation = Quaternion.Euler(startAngle.x,rotationAlpha,startAngle.z); // setting rotation
+        transform.localRotation = Quaternion.Euler(startAngle.x, rotationAlpha, startAngle.z); // setting rotation
         if (!isDoorOpen) // if the door has not been opened yet
         {
             if (rotationAlpha <= maxOpenAngle) // if rotationAlpha has not reached maxOpenAngle
@@ -62,8 +63,9 @@ public class DoorControl : Interactable
                 rotationAlpha += rotationSpeed; // Increase rotationAlpha by speed
                 return;
             }
-            isDoorOpen=true; // If we have reached desired rotationAlpha set door as open
-        } else // if the door is open
+            isDoorOpen = true; // If we have reached desired rotationAlpha set door as open
+        }
+        else // if the door is open
         {
             if (rotationAlpha >= startAngle.y) // if rotationAlpha is greater than startAngle
             {
@@ -72,8 +74,8 @@ public class DoorControl : Interactable
             }
             isDoorOpen = false; // Door is closed
         }
-        
+
         doLerp = false; // we are done animating
-        
+        if (isOneShoot is true) hasShoot = true;
     }
 }

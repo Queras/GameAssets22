@@ -1,19 +1,19 @@
 using System;
 using UnityEngine;
+[Serializable]
+public class KeyManager
+{
+    [SerializeField] public bool hasRedKey, hasGreenKey, hasBlueKey, hasPinkKey;
+}
 
 public class DrawerController : Interactable
 {
-    [Serializable]
-    private class KeyManager
-    {
-        [SerializeField] public bool hasRedKey, hasGreenKey, hasBlueKey, hasPinkKey;
-    }
+    [SerializeField] private KeyManager keyManager = new KeyManager();
     private float lerpAlpha;
     private bool drawertrigger;
     [SerializeField] private float lerpSpeed;
     [SerializeField] private GameObject drawer, redKey, greenKey, blueKey, pinkKey;
     [SerializeField] private Transform startPos, stopPos;
-    [SerializeField] private KeyManager keyManager = new KeyManager();
     [SerializeField] private BoxCollider mCollider;
     [SerializeField] private AudioClip mClip;
     // Start is called before the first frame update

@@ -121,9 +121,10 @@ public class PlayerController : MonoBehaviour
         }
         */ //John legacy
     }
-
+    public bool canJump = true;
     public void Jump()
     {
+        if (!canJump) return;
         if (controller.isGrounded)
         {
             float jumpVelocity = Mathf.Sqrt(-3 * gravity * jumpHeight);
@@ -131,6 +132,7 @@ public class PlayerController : MonoBehaviour
 
             m_rigidbody.useGravity = false;
             if (useGravity) m_rigidbody.AddForce(Physics.gravity * (m_rigidbody.mass * m_rigidbody.mass));
+
 
         }
 
