@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody m_rigidbody;
     private bool useGravity;
-
+    public bool isInMenu = true;
     [HideInInspector] public bool viewMaster = false;
 
     Camera mainCamera;
@@ -51,9 +51,10 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>(); // Fetching the component at Start() to keep the variables private, less room for error.
         m_rigidbody = GetComponent<Rigidbody>();
     }
-
+    public void SetisInMenu(bool value) { isInMenu = value; }
     void Update()
     {
+        if (isInMenu) { return; }
         HasVM();
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -205,7 +206,7 @@ public class PlayerController : MonoBehaviour
     }
     private LensColor lastUsedLense;
     private int lastUsedIndex;
-    public GameObject redLense, greenLense, blueLense;
+    public GameObject redLense, greenLense, blueLense, blackAndWhite;
     [DoNotSerialize] public RaycastHit hit;
 
     public void HasVM()

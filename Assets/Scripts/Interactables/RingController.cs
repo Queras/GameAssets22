@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RingController : Interactable
 {
-
+    public GameObject redLense, greenLense;
     private bool ringTrigger;
     [SerializeField] private int lerpSpeed, clicksNeeded;
     private float lerpAlpha;
@@ -32,6 +32,7 @@ public class RingController : Interactable
     }
     public override void Interact(PlayerController caller)
     {
+        if (redLense.activeSelf || greenLense.activeSelf) { return; }
         if (ringTrigger) return;
         ringTrigger = true;
         if (clicksDone == 6) { clicksDone = 0; }
